@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #0b0b0c;
+  --fg: #f5f7fa;
+  --muted: #9aa4b2;
+  --card: #131316;
+  --accent: #7c5cff;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.card {
+  @apply rounded-2xl shadow-md p-4 md:p-6 bg-[color:var(--card)];
+}
+
+.btn {
+  @apply px-4 py-2 rounded-xl font-medium;
+  background: var(--accent);
+  color: white;
+}
+
+.btn:disabled {
+  @apply opacity-60 cursor-not-allowed;
+}
+
+.input, .select, .textarea {
+  @apply bg-transparent border border-zinc-700 rounded-xl px-3 py-2 outline-none;
+}
+
+.label { @apply text-sm text-[color:var(--muted)]; }
+
+hr { @apply border-zinc-800 my-4; }
