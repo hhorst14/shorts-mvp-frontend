@@ -213,7 +213,18 @@ export default function Page() {
 
           <button className="btn" disabled={!videoId} onClick={doExport}>Export MP4</button>
 
-          <div className="text-sm text-zinc-400">{status}</div>
+          
+
+          <div className="text-sm text-zinc-400">
+            {status}
+            {exportUrl && (
+              <div className="mt-2">
+                <a href={exportUrl} target="_blank" rel="noreferrer" className="underline">
+                  Download exported MP4
+                </a>
+              </div>
+            )}
+          </div>
         </div>
 
         <div className="card space-y-3">
