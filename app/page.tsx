@@ -132,11 +132,18 @@ export default function Page() {
       setStatus(`Export failed: ${err}`);
       return;
     }
-    const data = (await res.json()) as ExportResp;
+    // const data = (await res.json()) as ExportResp;
+    // setStatus("Export done.");
+    // // If backend serves DATA_DIR under /files, open the file
+    // const url = data.output_path.replace(/.*\/data\//, "/files/");
+    // window.open(`${API_BASE}${url}`, "_blank");
+
+    const data = (await res.json()) as { output_path: string; public_url: string };
+    const full = `${API_BASE}${data.public_url}`;
     setStatus("Export done.");
-    // If backend serves DATA_DIR under /files, open the file
-    const url = data.output_path.replace(/.*\/data\//, "/files/");
-    window.open(`${API_BASE}${url}`, "_blank");
+    setExportUrl(full); // show a “Download exported MP4” link in the UI
+    // optionally auto-open:
+    window.open(full, "_blank");
   };
 
   return (
