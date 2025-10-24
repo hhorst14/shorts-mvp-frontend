@@ -68,22 +68,32 @@ export default function Page() {
   };
 
   const transcribe = async () => {
-    if (!videoId) return;
-    setStatus("Transcribing...");
-    const res = await fetch(`${API_BASE}/transcribe`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ video_id: videoId }),
-    });
-    if (!res.ok) {
-      const err = await res.text();
-      setStatus(`Transcribe failed: ${err}`);
-      return;
-    }
-    const data = (await res.json()) as TranscribeResp;
-    setStatus(`Transcribed (${data.language}, ${data.num_segments} segments).`);
+  if (!videoId) return;
+  setStatus("Transcribing...");
+
+  const payload = {
+    video_id: videoId,
+    start_ms: trimStart,   // ← from state
+    end_ms: trimEnd,       // ← from state
+    // language: "en",     // ← optional hint if you add a selector
   };
 
+  const res = await fetch(`${API_BASE}/transcribe`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+
+  if (!res.ok) {
+    const err = await res.text();
+    setStatus(`Transcribe failed: ${err}`);
+    return;
+  }
+
+  const data = (await res.json()) as TranscribeResp;
+  setStatus(`Transcribed (${data.language}, ${data.num_segments} segments).`);
+};
+  
   const replaceTranscript = async () => {
     if (!videoId) return;
     setStatus("Replacing transcript...");
