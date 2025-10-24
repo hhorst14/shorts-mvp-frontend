@@ -36,6 +36,7 @@ export default function Page() {
   const [trimEnd, setTrimEnd] = useState<number | null>(null);
 
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [exportUrl, setExportUrl] = useState<string | null>(null);
 
   useEffect(() => {
     if (!file) return;
