@@ -37,6 +37,8 @@ export default function Page() {
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const [exportUrl, setExportUrl] = useState<string | null>(null);
+  const [language, setLanguage] = useState<string | null>(null); // ISO code or null for auto
+
 
   useEffect(() => {
     if (!file) return;
@@ -158,6 +160,30 @@ export default function Page() {
             <input className="input w-full" type="file" accept="video/*" onChange={(e) => setFile(e.target.files?.[0] ?? null)} />
             <button className="btn mt-2" onClick={upload} disabled={!file}>Upload</button>
           </Field>
+
+          <div>
+          <div className="label mb-1">Language (for transcription)</div>
+          <select
+            className="select w-full"
+            value={language ?? ""}
+            onChange={(e) => setLanguage(e.target.value || null)}
+          >
+            <option value="">Auto-detect</option>
+            <option value="en">English</option>
+            <option value="es">Spanish</option>
+            <option value="fr">French</option>
+            <option value="de">German</option>
+            <option value="nl">Dutch</option>
+            <option value="pt">Portuguese</option>
+            <option value="it">Italian</option>
+            <option value="hi">Hindi</option>
+            <option value="ar">Arabic</option>
+            <option value="zh">Chinese</option>
+            <option value="ja">Japanese</option>
+            <option value="ko">Korean</option>
+            {/* add more as needed */}
+          </select>
+        </div>
 
           <Field label="2) Auto-transcribe (multi-language)">
             <button className="btn" onClick={transcribe} disabled={!videoId}>Transcribe</button>
